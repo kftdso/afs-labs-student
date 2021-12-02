@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-deployment
+  name: db-deployment
   namespace: ktwadelle
   labels:
-    app: app
+    app: db
 spec:
   replicas: 1
   strategy:
@@ -12,17 +12,17 @@ spec:
   minReadySeconds: 20
   selector:
     matchLabels:
-      app: app
+      app: db
   template:
     metadata:
       labels:
-        app: app
+        app: db
     spec:
       containers:
       - envFrom:
         - secretRef:
             name: db-secret
-        name: app-deployment
-        image: harbor.dev.afsmtddso.com/ktwadelle-harbor-project/app:49d0fd3-c738ecc
+        name: db-deployment
+        image: harbor.dev.afsmtddso.com/ktwadelle-harbor-project/db@sha256:8a642f568cda41f1c72cbeb7445b0f84713d46555bda7d3ebf2db480a55ab146
         ports:
-        - containerPort: 5000
+        - containerPort: 5432
